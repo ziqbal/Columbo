@@ -1,0 +1,53 @@
+# Columbo
+
+About:
+
+Real-time low latency visualization of log files with multiple filters.
+
+Front-end using an open-source admin template built with bootstrap which includes graphing capabilities.
+
+Ajax requests to server for JSON data.
+
+Server scripts that collect log lines and feed to modular filters which create final output.
+
+Access log must be in the following format:
+
+LogFormat "%v %h %l %u %t \"%r\" %>s %b %T/%D \"%{Referer}i\" \"%{Cookie}i\" \"%{User-Agent}i\"" combined
+
+Date must be in the (default) specific format (example): 15/Mar/2017:10:55:46 +0000
+
+Tested on Mac OS X (Safari/Firefox) using static access log file and on a live linux production server.
+
+Setup:
+
+# All php scripts must be run independently in their own terminal windows
+# Start fresh
+rm columbo/data/* columbo/logs/*
+
+# Reads sample.log and sends data to the filters
+# Change path inside to log file if you don’t use traffic script
+php columbo/tail.php
+
+# (Optional) Reads some other access log and appends it to sample.log php columbo/traffic.php > columbo/sample.log
+
+# Run the “requests per second” filter 
+php columbo/filters/a.php
+
+# Run the “404’s per second” filter 
+php columbo/filters/b.php
+
+# Restart filters ro reset stats
+
+# Load index.html in a modern browser
+
+TODO:
+Average time to send a page
+Last admin activity
+Geo / Time Fence admin urls
+A file is requested withour a request for another User agent not valid or changing often
+Time between requests
+Use transparent pixels
+Check session/cookie values
+Non GET requests
+New script file requests detected
+Use PHPIDS to detect XSS, SQL Injection, DoS etc. Use another language for long running scripts
